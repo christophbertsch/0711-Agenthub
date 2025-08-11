@@ -1,0 +1,11 @@
+
+> 0711-agenthub@1.0.0 dev
+> vite
+
+Port 51367 is in use, trying another one...
+
+  VITE v7.1.1  ready in 190 ms
+
+  ➜  Local:   http://localhost:51368/
+  ➜  Network: http://172.17.0.3:51368/
+  ➜  press h + enter to show help

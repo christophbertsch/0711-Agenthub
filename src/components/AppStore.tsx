@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { App } from '../types';
-import { getStoredApps, addApp } from '../utils/storage';
+import { getStoredApps, addApp, saveApps } from '../utils/storage';
 import { analyzeApp } from '../utils/appAnalyzer';
 import AppCard from './AppCard';
 import AppModal from './AppModal';
@@ -24,12 +24,36 @@ export default function AppStore({ onLogout }: AppStoreProps) {
   const loadApps = async () => {
     let storedApps = getStoredApps();
     
+    // Update existing Brand to Prompt app URL if it exists with old URL
+    const oldBrandToPromptUrl = 'https://vercel.com/christophbertschs-projects/0711-brand-to-prompt';
+    const newBrandToPromptUrl = 'https://0711-brand-to-prompt.vercel.app';
+    const brandToPromptApp = storedApps.find(app => app.url === oldBrandToPromptUrl);
+    
+    if (brandToPromptApp) {
+      // Update the URL and re-analyze the app
+      try {
+        const updatedAppData = await analyzeApp(newBrandToPromptUrl);
+        brandToPromptApp.url = newBrandToPromptUrl;
+        brandToPromptApp.name = updatedAppData.name;
+        brandToPromptApp.description = updatedAppData.description;
+        brandToPromptApp.category = updatedAppData.category;
+        brandToPromptApp.tags = updatedAppData.tags;
+        brandToPromptApp.icon = updatedAppData.icon;
+        brandToPromptApp.updatedAt = new Date();
+        
+        // Save updated apps
+        saveApps(storedApps);
+      } catch (error) {
+        console.error('Error updating Brand to Prompt app:', error);
+      }
+    }
+    
     // If no apps are stored, add the default ones
     if (storedApps.length === 0) {
       const defaultUrls = [
         'https://ausschreibung.vercel.app/',
         'https://etim-classifier.vercel.app/',
-        'https://vercel.com/christophbertschs-projects/0711-brand-to-prompt',
+        'https://0711-brand-to-prompt.vercel.app',
         'https://llm-comparison-tool-ten.vercel.app/'
       ];
 

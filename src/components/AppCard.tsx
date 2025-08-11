@@ -25,10 +25,10 @@ export default function AppCard({ app, onClick }: AppCardProps) {
 
   return (
     <div 
-      className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer overflow-hidden"
+      className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer overflow-hidden h-full flex flex-col"
       onClick={onClick}
     >
-      <div className="p-6">
+      <div className="p-6 flex-1 flex flex-col">
         <div className="flex items-center space-x-4 mb-4">
           <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl overflow-hidden">
             {iconUrl ? (
@@ -56,10 +56,10 @@ export default function AppCard({ app, onClick }: AppCardProps) {
           </div>
         </div>
         
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{app.description}</p>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">{app.description}</p>
         
         {app.tags && app.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-4">
+          <div className="flex flex-wrap gap-1 mb-6">
             {app.tags.slice(0, 3).map((tag, index) => (
               <span 
                 key={index}
@@ -78,7 +78,7 @@ export default function AppCard({ app, onClick }: AppCardProps) {
         
         <button
           onClick={handleLaunch}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out mt-auto"
         >
           Launch App
         </button>
