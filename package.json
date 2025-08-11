@@ -1,0 +1,36 @@
+{
+  "name": "0711-agenthub",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/christophbertsch/0711-Agenthub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/christophbertsch/0711-Agenthub/issues"
+  },
+  "homepage": "https://github.com/christophbertsch/0711-Agenthub#readme",
+  "description": "An App Store-like interface for managing and launching web applications",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^24.2.1",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.1"
+  }
+}
