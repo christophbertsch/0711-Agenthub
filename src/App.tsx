@@ -1,10 +1,9 @@
-import React from 'react';
 import { useAuth } from './hooks/useAuth';
 import LoginForm from './components/LoginForm';
 import AppStore from './components/AppStore';
 
 function App() {
-  const { user, loading, login, logout, isAuthenticated } = useAuth();
+  const { loading, login, logout, isAuthenticated } = useAuth();
 
   if (loading) {
     return (

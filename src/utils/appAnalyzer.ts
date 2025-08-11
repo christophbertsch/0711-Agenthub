@@ -1,6 +1,6 @@
 import { App } from '../types';
 
-export async function analyzeApp(url: string): Promise<Partial<App>> {
+export async function analyzeApp(url: string): Promise<Omit<App, 'id' | 'createdAt' | 'updatedAt'>> {
   try {
     // For demo purposes, we'll extract basic info from the URL
     // In a real implementation, you'd fetch the page and analyze it
@@ -43,18 +43,20 @@ export async function analyzeApp(url: string): Promise<Partial<App>> {
     return {
       name,
       description,
+      url,
+      icon: `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`,
       category,
-      tags,
-      url
+      tags
     };
   } catch (error) {
     console.error('Error analyzing app:', error);
     return {
       name: 'Unknown App',
       description: 'Unable to analyze application',
+      url,
+      icon: `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`,
       category: 'Unknown',
-      tags: [],
-      url
+      tags: []
     };
   }
 }

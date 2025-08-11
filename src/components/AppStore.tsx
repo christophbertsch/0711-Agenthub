@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { App } from '../types';
 import { getStoredApps, addApp } from '../utils/storage';
 import { analyzeApp } from '../utils/appAnalyzer';
@@ -49,7 +49,7 @@ export default function AppStore({ onLogout }: AppStoreProps) {
     setApps(storedApps);
   };
 
-  const handleAddApp = async (appData: any) => {
+  const handleAddApp = async (appData: Omit<App, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newApp = addApp(appData);
     setApps(prev => [...prev, newApp]);
   };
