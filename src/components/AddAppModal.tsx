@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { analyzeApp } from '../utils/appAnalyzer';
+import { configService } from '../services/config';
 
 interface AddAppModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ export default function AddAppModal({ isOpen, onClose, onAdd }: AddAppModalProps
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [generatingIcon, setGeneratingIcon] = useState(false);
 
   if (!isOpen) return null;
 
@@ -22,6 +24,12 @@ export default function AddAppModal({ isOpen, onClose, onAdd }: AddAppModalProps
     try {
       // Validate URL
       new URL(url);
+      
+      // Check if AI icon generation is enabled
+      const isAiEnabled = configService.isIconGenerationEnabled();
+      if (isAiEnabled) {
+        setGeneratingIcon(true);
+      }
       
       // Analyze the app
       const appData = await analyzeApp(url);
@@ -36,12 +44,14 @@ export default function AddAppModal({ isOpen, onClose, onAdd }: AddAppModalProps
       setError('Please enter a valid URL');
     } finally {
       setLoading(false);
+      setGeneratingIcon(false);
     }
   };
 
   const handleClose = () => {
     setUrl('');
     setError('');
+    setGeneratingIcon(false);
     onClose();
   };
 
@@ -91,13 +101,23 @@ export default function AddAppModal({ isOpen, onClose, onAdd }: AddAppModalProps
               <div className="text-red-600 text-sm">{error}</div>
             )}
 
+            {generatingIcon && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                <div className="flex items-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                  <span className="text-sm text-blue-800">Generating AI icon...</span>
+                </div>
+                <p className="text-xs text-blue-600 mt-1">This may take a few seconds</p>
+              </div>
+            )}
+
             <div className="flex space-x-3 pt-4">
               <button
                 type="submit"
                 disabled={loading}
                 className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-medium py-2 px-4 rounded-lg transition duration-150 ease-in-out"
               >
-                {loading ? 'Analyzing...' : 'Add App'}
+                {loading ? (generatingIcon ? 'Generating Icon...' : 'Analyzing...') : 'Add App'}
               </button>
               <button
                 type="button"
