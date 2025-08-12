@@ -1,9 +1,14 @@
 import { useAuth } from './hooks/useAuth';
 import LoginForm from './components/LoginForm';
 import AppStore from './components/AppStore';
+import IconGenerationTool from './components/IconGenerationTool';
 
 function App() {
   const { loading, login, logout, isAuthenticated } = useAuth();
+  
+  // Check if we should show the icon generation tool
+  const urlParams = new URLSearchParams(window.location.search);
+  const showIconTool = urlParams.get('tool') === 'icons';
 
   if (loading) {
     return (
@@ -18,6 +23,10 @@ function App() {
 
   if (!isAuthenticated) {
     return <LoginForm onLogin={login} />;
+  }
+
+  if (showIconTool) {
+    return <IconGenerationTool />;
   }
 
   return <AppStore onLogout={logout} />;
